@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Betty</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Hedvig+Letters+Sans&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="icon" href="" type="image/x-icon" />
+</head>
+
+<body>
+  <div class="grid-template">
+    <div class="envelope animate__animated animate__swing">
+      <div class="flap"></div>
+      <div class="heart"></div>
+      <div class="face"></div>
+      <!-- Carta dentro del sobre -->
+      <div class="carta">
+        <img src="./diseno-floral.png" alt="" width="80">
+
+        <p style="text-align: right;">
+          Octubre 15 de 2025
+        </p>
+        <hr>
+        <p style="text-align: left;">
+          Querida Betty: 🙈
+        </p>
+
+
+
+        <p style="text-align: justify;" class="texto">
+          Hoy me cuesta escribir estas líneas porque, aunque me alegra saber que vienen nuevos caminos para ti, también
+          siento la despedida de una gran compañera y amiga. Durante el tiempo que compartimos en el trabajo,
+          construimos un lazo muy bonito, lleno de momentos sinceros, apoyo y muchas risas que sin duda voy a extrañar.
+          <br><br>
+
+          Quiero que sepas que valoro mucho tu amistad y agradezco todo el apoyo que me brindaste. Siempre tuviste la
+          disposición de ayudar, de compartir tus conocimientos y de hacerlo con una sonrisa, y eso dice mucho de la
+          gran persona que eres. <br><br>
+
+          Adonde quiera que vayas, vas a brillar. Eres una persona muy talentosa, comprometida y con un gran corazón,
+          cualidades que te van a llevar muy lejos. Estoy seguro de que el nuevo camino que emprendes te traerá muchas
+          satisfacciones y nuevas oportunidades para seguir creciendo. <br><br>
+
+          Gracias por todo, Beatriz —por tu cercanía, por tu alegría y, sobre todo, por tu amistad—. No es un adiós,
+          sino un hasta pronto. Espero que sigamos en contacto y que la vida nos vuelva a cruzar pronto.
+          <br><br>
+
+          Con mucho cariño,<br><br>
+          Alfonso Godinez
+
+        <div class="img-center">
+          <img src="./lavanda.png" width="90" height="75" alt="">
+        </div>
+
+
+        </p>
+
+
+        </p>
+        <div class="img-container">
+          <img src="./diseno-floral-volt.png" width="80" alt="Diseño floral">
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
+  <script>
+    bubbly({
+      colorStart: "#3b0a45",
+      colorStop: "#8b5cf6",
+      blur: 1,
+      compose: "source-over",
+      bubbleFunc: () => `hsla(${270 + Math.random() * 20}, 80%, 75%, 0.4)`,
+    });
+  </script>
+</body>
+
+</html>
