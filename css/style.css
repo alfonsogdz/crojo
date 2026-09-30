@@ -3,11 +3,13 @@
   inherits: false;
   initial-value: 0deg;
 }
+
 @property --progress {
   syntax: "<percentage>";
   inherits: false;
   initial-value: 20%;
 }
+
 @property --text {
   syntax: "<number>";
   inherits: false;
@@ -18,213 +20,299 @@
   box-sizing: border-box;
 }
 
+html {
+  min-height: 100%;
+}
+
 body {
   height: 1000vh;
+  margin: 0;
   overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 45%, #65236d 0%, transparent 58%),
+    linear-gradient(145deg, #240b2c 0%, #3b0a45 45%, #16091e 100%);
+  font-family: "Hedvig Letters Sans", sans-serif;
 }
 
 .text-clamp {
   text-align: center;
   font-size: clamp(20px, 5vmin, 100px);
 }
+
 .img-container {
   display: flex;
-  justify-content: flex-end; /* mueve la imagen a la derecha */
-  align-items: flex-end; /* opcional: baja la imagen al fondo del contenedor */
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .img-center {
   display: flex;
-  justify-content: center; /* mueve la imagen a la derecha */
+  justify-content: center;
   align-items: center;
 }
+
 .grid-template {
-  top: 0;
-  left: 0;
   position: fixed;
   inset: 0;
   display: grid;
   place-items: center;
 }
-/* 
-.text-show {
-    animation: reveal-text ease both;
-    animation-timeline: scroll();
-    animation-range: 80%;
-    opacity: var(--text);
-    position: relative;
-    z-index: 10;
-    padding-top: 6cqw;
-    text-align: center;
-    font-size: 5cqw;
-    --tw-text-opacity: 1;
-    color: rgb(248 113 113 / var(--tw-text-opacity));
-} */
+
+/* ==========================================
+   SOBRE REALISTA
+   ========================================== */
 
 .envelope {
-  container: envelope/ inline-size;
-  perspective: 1000px;
+  container: envelope / inline-size;
   position: relative;
+  isolation: isolate;
+  perspective: 1200px;
+
   width: 60vmin;
-  aspect-ratio: 16/9;
-  --tw-bg-opacity: 1;
-  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
-  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-    0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color),
-    0 8px 10px -6px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  aspect-ratio: 16 / 9;
+
   cursor: pointer;
-  transition: transform 0.4s ease;
+  transform-style: preserve-3d;
+
+  border: 1px solid rgba(124, 94, 59, 0.32);
+  border-radius: 3px;
+
+  background:
+    radial-gradient(
+      ellipse at 20% 12%,
+      rgba(255, 255, 255, 0.95),
+      transparent 45%
+    ),
+    linear-gradient(145deg, #fffdf7 0%, #f6ecd9 38%, #e7d4b7 100%);
+
+  box-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.75) inset,
+    0 -2px 5px rgba(120, 83, 43, 0.08) inset,
+    0 3px 5px rgba(36, 20, 35, 0.08),
+    0 12px 22px rgba(36, 20, 35, 0.18),
+    0 28px 50px rgba(15, 5, 20, 0.28);
+
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease;
 }
 
-.flap {
-  --tw-bg-opacity: 1;
-  background-color: rgb(203 213 225 / var(--tw-bg-opacity));
-  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-  width: 100cqw;
-  height: 30cqw;
-  transform-style: preserve-3d;
-  rotate: x var(--flap-rotation);
+/* Textura fina del papel */
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(113, 83, 49, 0.025) 0,
+      rgba(113, 83, 49, 0.025) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    linear-gradient(
+      115deg,
+      rgba(255, 255, 255, 0.24),
+      transparent 45%,
+      rgba(139, 103, 61, 0.07)
+    );
+
+  opacity: 0.85;
+}
+
+/* ==========================================
+   SOLAPA SUPERIOR
+   ========================================== */
+
+.envelope .flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 65%;
+
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+
+  background: linear-gradient(155deg, #fffdf7 0%, #f8edd9 40%, #e2c9a5 100%);
+
   transform-origin: 50% 0;
+  transform-style: preserve-3d;
+  backface-visibility: visible;
+
+  rotate: x var(--flap-rotation);
+
   animation: animate-flap ease both;
   animation-timeline: scroll();
   animation-range: 0 50%;
+
   z-index: 4;
-  position: relative;
-  transition: top 0.5s ease;
+
+  filter: drop-shadow(0 4px 3px rgba(82, 56, 33, 0.15));
+
+  transition: filter 0.4s ease;
 }
 
-/* Cuando el sobre se abre */
-.envelope.open .flap {
-  animation: animate-flap 0.5s forwards; /* Aplicamos la animación cuando se activa la clase open */
-}
+/* ==========================================
+   FRENTE DEL SOBRE Y PLIEGUES
+   ========================================== */
 
-/* Carta que aparece al hacer clic */
-/* Carta que aparece al hacer clic */
-.carta {
+.envelope .face {
   position: absolute;
-  top: 0; /* Comienza desde la parte superior del sobre */
-  left: 0;
-  width: 100%; /* La carta tiene el mismo ancho que el sobre */
-  height: 120%; /* La carta tiene la misma altura que el sobre */
-  background-color: white;
-  padding: 20px;
-  box-sizing: border-box;
-  border-radius: 10px;
-  transform: translateY(100%); /* La carta comienza fuera de la vista */
-  opacity: 0; /* La carta comienza invisible */
-  transition: transform 0.5s ease, opacity 0.5s ease; /* Transición para la carta */
-  z-index: 5; /* Asegúrate de que la carta esté encima del sobre */
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3); /* Sombra de la carta */
-  border-radius: 1rem;
-  border-top-right-radius: 10px;
-  overflow: hidden;
-}
-.envelope.open .carta {
-  transform: translateY(0%);
-  opacity: 1;
-  width: 40vw;
-  height: 50vh;
-  overflow-y: auto;
-  border-radius: 1em;
-  position: fixed;
-  top: 50%;
-  left: -20%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+  inset: 0;
 
-  /* animation: carta-salir 1s ease-out forwards;  */
-}
+  clip-path: polygon(0 0, 50% 35%, 100% 0, 100% 100%, 0 100%);
 
-/*
-.envelope.open .heart {
-  opacity: 1; /* Hace visible el corazón 
-  transform: translateY(-100%);
-  animation: show-heart 1s forwards; 
   z-index: 3;
+
+  background:
+    linear-gradient(
+      145deg,
+      transparent 49.3%,
+      rgba(145, 106, 63, 0.17) 49.8%,
+      rgba(255, 255, 255, 0.48) 50.2%,
+      transparent 50.8%
+    ),
+    linear-gradient(
+      35deg,
+      transparent 49.3%,
+      rgba(145, 106, 63, 0.14) 49.8%,
+      rgba(255, 255, 255, 0.38) 50.2%,
+      transparent 50.8%
+    ),
+    linear-gradient(180deg, #f2e2c8 0%, #fffaf0 58%, #ead8bb 100%);
+
+  filter: drop-shadow(0 -1px 1px rgba(115, 80, 42, 0.08));
 }
 
-*/
-.cursiva {
-  font-family: "Cedarville Cursive", serif;
-  font-weight: 400;
-  font-style: normal;
-}
+/* ==========================================
+   CORAZÓN
+   Conserva el elemento si lo activas después
+   ========================================== */
 
-.face {
-  clip-path: polygon(50% 35%, 100% 0, 100% 100%, 0 100%, 0 0);
-  --tw-bg-opacity: 1;
-  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
-  inset: 0px;
+.envelope .heart {
   position: absolute;
-  z-index: 3;
+  z-index: 2;
+  pointer-events: none;
 }
 
-/* .heart {
-  --c: red;
-  position: absolute;
-  width: 50cqw;
-  left: 50%;
-  top: 0;
-  transform: translateY(var(--progress));
-  animation: show-heart ease both;
-   animation-timeline: scroll(); 
-  animation-range: 60%;
-  margin-left: -25cqw;
-  aspect-ratio: 1/1;
-  background: radial-gradient(at 70% 31%, var(--c) 29%, #0000 30%),
-    radial-gradient(at 30% 31%, var(--c) 29%, #0000 30%),
-    conic-gradient(from -45deg at 50% 84%, var(--c) 90deg, #0000 0) bottom/100%
-      50% no-repeat;
-} */
+/* ==========================================
+   CARTA
+   ========================================== */
 
-/* Carta dentro del sobre */
-.carta {
+.envelope .carta {
   position: absolute;
   top: 100%;
   left: 0;
+
   width: 100%;
   height: 100%;
-  background-color: white;
+
   padding: 20px;
+
   box-sizing: border-box;
+  border: 1px solid rgba(184, 159, 124, 0.3);
   border-radius: 5px;
-  transform: translateY(100%); /* Inicialmente escondida */
-  opacity: 0; /* Inicialmente invisible */
-  transition: transform 0.5s ease, opacity 0.5s ease; /* Animación para que salga */
-  /* background: repeating-linear-gradient(#F1EDE9, #F1EDE9 31px, #94ACD4 31px, #94ACD4 32px);
-    font-size: 22px;
-    line-height: 34px;
-    outline: 0;
-    padding: 35px 50px; */
+
+  background: linear-gradient(115deg, #ffffff 0%, #fffdf8 65%, #faf4e9 100%);
+
+  box-shadow:
+    0 3px 8px rgba(46, 31, 23, 0.1),
+    0 18px 48px rgba(25, 12, 29, 0.24),
+    inset 0 0 0 4px rgba(244, 235, 218, 0.3);
+
+  transform: translateY(100%);
+  opacity: 0;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease;
+
+  z-index: 5;
 }
 
-/* Cuando el sobre se abre, la carta se muestra */
+/* Carta abierta: se conserva el selector original */
+
 .envelope.open .carta {
-  transform: translateY(-50%); /* Muestra la carta */
-  opacity: 1; /* Hace la carta visible */
+  position: fixed;
+
+  top: 50%;
+  left: 50%;
+
+  width: 60vw;
+  height: 50vh;
+
+  max-width: 800px;
+  min-width: 400px;
+  max-height: 60vh;
+
+  padding: 24px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  border-radius: 12px;
+
+  transform: translate(-50%, -50%);
+  opacity: 1;
+
+  z-index: 10;
+
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.1),
+    0 25px 70px rgba(12, 4, 18, 0.38),
+    inset 0 0 0 4px rgba(244, 235, 218, 0.32);
+
+  scrollbar-width: thin;
+  scrollbar-color: #d5c1a2 transparent;
 }
+
+/* Tipografía de la carta */
+
 .texto {
   font-family: "Hedvig Letters Sans", sans-serif;
   font-weight: 400;
   font-style: normal;
+  line-height: 1.75;
+  color: #403740;
 }
 
-/* Efecto de apertura del sobre */
+/* Firma manuscrita */
+
+.cursiva {
+  font-family: "Cedarville Cursive", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ==========================================
+   APERTURA DEL SOBRE
+   ========================================== */
+
 .envelope.open {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
-/* Animación de la solapa */
+.envelope.open .flap {
+  animation: animate-flap 0.5s forwards;
+  filter: drop-shadow(0 5px 4px rgba(82, 56, 33, 0.12));
+}
+
 @keyframes animate-flap {
   from {
     --flap-rotation: 0deg;
   }
+
   99% {
     z-index: 4;
   }
+
   100% {
     --flap-rotation: 180deg;
     z-index: 1;
@@ -233,66 +321,335 @@ body {
 
 @keyframes animate-flap-d {
   from {
-    --flap-rotation-d: 0deg;
+    --flap-rotation: 0deg;
   }
+
   99% {
     z-index: 4;
   }
+
   100% {
-    --flap-rotation-d: 0deg;
+    --flap-rotation: 180deg;
     z-index: 1;
   }
 }
 
-/* Media Query para pantallas más pequeñas (móviles) */
-@media screen and (max-width: 600px) {
-  .envelope.open .carta {
-    width: 85vw; /* Un 90% del ancho de la ventana */
-    height: 70vh; /* 70% de la altura de la ventana */
-    max-width: 500px; /* El máximo ancho será de 500px */
-    min-width: 250px; /* Ancho mínimo más pequeño */
-    max-height: 75vh; /* Máxima altura de la carta será del 75% de la pantalla */
-  }
-  .flap {
-    --tw-bg-opacity: 1;
-    background-color: rgb(203 213 225 / var(--tw-bg-opacity));
-    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-    width: 100cqw;
-    height: 30cqw;
-    transform-style: preserve-3d;
-    transform-origin: 50% 0;
-    rotate: x var(animate-flap-d);
-    animation: animate-flap-d ease both;
-    animation-range: 0 20%;
-    z-index: 4;
-    position: relative;
-    transition: top 0.5s ease;
+/* ==========================================
+   EFECTO HOVER
+   ========================================== */
+
+@media (hover: hover) and (pointer: fine) {
+  .envelope:not(.open):hover {
+    box-shadow:
+      0 2px 4px rgba(255, 255, 255, 0.75) inset,
+      0 -2px 5px rgba(120, 83, 43, 0.08) inset,
+      0 5px 8px rgba(36, 20, 35, 0.1),
+      0 16px 28px rgba(36, 20, 35, 0.22),
+      0 32px 55px rgba(15, 5, 20, 0.3);
   }
 }
-/* Media Query para pantallas medianas (tabletas) */
+
+/* ==========================================
+   MÓVILES
+   ========================================== */
+
+@media screen and (max-width: 600px) {
+  .envelope {
+    width: 78vmin;
+    max-width: 360px;
+  }
+
+  .envelope .flap {
+    height: 65%;
+    animation: animate-flap-d ease both;
+    animation-timeline: scroll();
+    animation-range: 0 20%;
+  }
+
+  .envelope.open .carta {
+    width: 85vw;
+    height: 70vh;
+
+    min-width: 250px;
+    max-width: 500px;
+    max-height: 75vh;
+
+    top: 50%;
+    left: 50%;
+
+    padding: 18px;
+
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+  }
+
+  .texto {
+    line-height: 1.65;
+    font-size: 14px;
+  }
+}
+
+/* ==========================================
+   TABLETAS
+   ========================================== */
+
 @media screen and (min-width: 601px) and (max-width: 1024px) {
   .envelope.open .carta {
-    width: 80vw; /* 80% del ancho de la ventana */
-    height: 60vh; /* 60% de la altura de la ventana */
-    max-width: 650px; /* Ancho máximo de 650px */
-    min-width: 320px; /* Ancho mínimo para tabletas */
-    max-height: 70vh; /* Altura máxima de la carta será el 70% de la altura de la pantalla */
-    top: 50%; /* Posiciona la carta en el centro vertical */
-    left: 50%; /* Posiciona la carta en el centro horizontal */
+    width: 80vw;
+    height: 60vh;
+
+    min-width: 320px;
+    max-width: 650px;
+    max-height: 70vh;
+
+    top: 50%;
+    left: 50%;
+
     transform: translate(-50%, -50%);
   }
 }
 
-/* Media Query para pantallas grandes (escritorios y laptops grandes) */
+/* ==========================================
+   ESCRITORIO
+   ========================================== */
+
 @media screen and (min-width: 1025px) {
   .envelope.open .carta {
-    width: 60vw; /* Un 60% del ancho de la ventana */
-    height: 50vh; /* 50% de la altura de la ventana */
-    max-width: 800px; /* El máximo ancho será de 800px */
-    min-width: 400px; /* El ancho mínimo será de 400px */
-    max-height: 60vh; /* La carta puede ser más pequeña en altura */
-    top: 50%; /* Posiciona la carta en el centro vertical */
-    left: 50%; /* Posiciona la carta en el centro horizontal */
+    width: 60vw;
+    height: 50vh;
+
+    min-width: 400px;
+    max-width: 800px;
+    max-height: 60vh;
+
+    top: 50%;
+    left: 50%;
+
     transform: translate(-50%, -50%);
+  }
+}
+
+/* Respeta las preferencias de movimiento del usuario */
+
+@media (prefers-reduced-motion: reduce) {
+  .envelope,
+  .envelope .carta {
+    transition-duration: 0.01ms;
+  }
+}
+
+/* ==========================================
+   ANIMACIÓN ROMÁNTICA DE LA CARTA
+   ========================================== */
+
+/* Estado inicial: carta escondida */
+.envelope .carta {
+  opacity: 0;
+  transform: translate(-50%, 30px) scale(0.94);
+  transform-origin: center center;
+  transition:
+    opacity 0.65s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.8s ease;
+  will-change: transform, opacity;
+}
+
+/* La carta aparece cuando se abre el sobre */
+.envelope.open .carta {
+  animation: carta-aparecer 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  opacity: 1;
+
+  box-shadow:
+    0 8px 20px rgba(24, 55, 47, 0.12),
+    0 25px 70px rgba(15, 40, 35, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.7),
+    inset 0 0 0 4px rgba(244, 235, 218, 0.3);
+}
+
+/* Movimiento de salida suave */
+@keyframes carta-aparecer {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 35px) scale(0.94);
+    filter: blur(4px);
+  }
+
+  65% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(-50%, -53%) scale(1.015);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* El contenido aparece progresivamente */
+.envelope.open .carta > p,
+.envelope.open .carta > hr,
+.envelope.open .carta > img,
+.envelope.open .carta .img-center,
+.envelope.open .carta .img-container {
+  animation: contenido-revelado 0.7s ease both;
+  animation-delay: 0.25s;
+}
+
+.envelope.open .carta > p:nth-of-type(2) {
+  animation-delay: 0.35s;
+}
+
+.envelope.open .carta .texto {
+  animation-delay: 0.45s;
+}
+
+@keyframes contenido-revelado {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* Apertura más suave del sobre */
+.envelope {
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.6s ease;
+}
+
+/* =========================================
+   ANIMACIÓN VISIBLE DE APERTURA DE LA CARTA
+   ========================================= */
+
+/* Carta cerrada */
+.envelope .carta {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Carta abierta: posición y animación */
+.envelope.open .carta {
+  position: fixed !important;
+
+  top: 50% !important;
+  left: 50% !important;
+
+  width: 60vw;
+  height: 50vh;
+  max-width: 800px;
+  min-width: 400px;
+  max-height: 60vh;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  opacity: 1;
+  visibility: visible;
+
+  z-index: 100 !important;
+
+  animation: carta-cinematica 1.1s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+
+  will-change: transform, opacity, filter;
+
+  box-shadow:
+    0 35px 90px rgba(0, 0, 0, 0.28),
+    0 10px 30px rgba(22, 78, 73, 0.18),
+    inset 0 0 0 4px rgba(244, 235, 218, 0.35);
+}
+
+/* La carta emerge, se acerca y termina centrada */
+@keyframes carta-cinematica {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 35%) scale(0.72);
+    filter: blur(8px);
+  }
+
+  45% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(-50%, -56%) scale(1.025);
+  }
+
+  75% {
+    transform: translate(-50%, -48%) scale(0.99);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Revelado gradual del contenido */
+.envelope.open .carta > p,
+.envelope.open .carta > hr,
+.envelope.open .carta > img,
+.envelope.open .carta .img-center,
+.envelope.open .carta .img-container {
+  animation: texto-carta 0.7s ease-out both;
+  animation-delay: 0.55s;
+}
+
+@keyframes texto-carta {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* Ajustes para móviles */
+@media screen and (max-width: 600px) {
+  .envelope.open .carta {
+    width: 85vw;
+    height: 70vh;
+    min-width: 250px;
+    max-width: 500px;
+    max-height: 75vh;
+    padding: 18px;
+  }
+}
+
+/* Ajustes para tabletas */
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+  .envelope.open .carta {
+    width: 80vw;
+    height: 60vh;
+    min-width: 320px;
+    max-width: 650px;
+    max-height: 70vh;
+  }
+}
+
+/* Movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .envelope.open .carta {
+    animation: none !important;
+    transform: translate(-50%, -50%) !important;
+    filter: none !important;
+  }
+
+  .envelope.open .carta > p,
+  .envelope.open .carta > hr,
+  .envelope.open .carta > img,
+  .envelope.open .carta .img-center,
+  .envelope.open .carta .img-container {
+    animation: none !important;
+    opacity: 1;
   }
 }
